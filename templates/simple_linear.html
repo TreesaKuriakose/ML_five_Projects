@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Air Pollution Prediction{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Air Pollution Prediction</h1>
+    
+    <div class="mb-4">
+        <h4>Model Accuracy: 
+            <span class="badge bg-success accuracy-badge">{{ accuracy|floatformat:4 }}</span>
+        </h4>
+    </div>
+
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <div class="input-info">
+            <h5>Input Field Information:</h5>
+            <div class="mb-3">
+                <label for="vehicle_count" class="form-label">{{ input_info.vehicle_count.description }}</label>
+                <input type="number" class="form-control" id="vehicle_count" name="vehicle_count" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.vehicle_count.normal_range }}</div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Predict</button>
+    </form>
+
+    {% if result %}
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Prediction Result</h4>
+        <p>Predicted Pollution Level (AQI): {{ result.prediction }}</p>
+    </div>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+</div>
+{% endblock %}

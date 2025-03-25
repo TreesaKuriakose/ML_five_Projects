@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}ML Algorithms - Home{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">ML Models Interface</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card model-card">
+                <div class="card-body">
+                    <h5 class="card-title">Air Pollution Prediction</h5>
+                    <p class="card-text">Simple Linear Regression</p>
+                    <div class="mb-3">
+                        <span class="badge bg-success accuracy-badge">Accuracy: {{ accuracies.simple_linear|floatformat:4 }}</span>
+                    </div>
+                    <a href="{% url 'simple_linear' %}" class="btn btn-primary">Try it</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card model-card">
+                <div class="card-body">
+                    <h5 class="card-title">Heart Disease Risk</h5>
+                    <p class="card-text">Multiple Linear Regression</p>
+                    <div class="mb-3">
+                        <span class="badge bg-success accuracy-badge">Accuracy: {{ accuracies.multiple_linear|floatformat:4 }}</span>
+                    </div>
+                    <a href="{% url 'multiple_linear' %}" class="btn btn-primary">Try it</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card model-card">
+                <div class="card-body">
+                    <h5 class="card-title">Blood Sugar Prediction</h5>
+                    <p class="card-text">Polynomial Regression</p>
+                    <div class="mb-3">
+                        <span class="badge bg-success accuracy-badge">Accuracy: {{ accuracies.polynomial|floatformat:4 }}</span>
+                    </div>
+                    <a href="{% url 'polynomial' %}" class="btn btn-primary">Try it</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card model-card">
+                <div class="card-body">
+                    <h5 class="card-title">Loan Approval</h5>
+                    <p class="card-text">Logistic Regression</p>
+                    <div class="mb-3">
+                        <span class="badge bg-success accuracy-badge">Accuracy: {{ accuracies.logistic|floatformat:4 }}</span>
+                    </div>
+                    <a href="{% url 'logistic' %}" class="btn btn-primary">Try it</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card model-card">
+                <div class="card-body">
+                    <h5 class="card-title">Cyber Attack Classification</h5>
+                    <p class="card-text">K-Nearest Neighbors</p>
+                    <div class="mb-3">
+                        <span class="badge bg-success accuracy-badge">Accuracy: {{ accuracies.knn|floatformat:4 }}</span>
+                    </div>
+                    <a href="{% url 'knn' %}" class="btn btn-primary">Try it</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

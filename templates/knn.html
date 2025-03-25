@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Cyber Attack Classification{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Cyber Attack Classification</h1>
+    
+    <div class="mb-4">
+        <h4>Model Accuracy: 
+            <span class="badge bg-success accuracy-badge">{{ accuracy|floatformat:4 }}</span>
+        </h4>
+    </div>
+
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <div class="input-info">
+            <h5>Input Field Information:</h5>
+            <div class="mb-3">
+                <label for="packet_size" class="form-label">{{ input_info.packet_size.description }}</label>
+                <input type="number" class="form-control" id="packet_size" name="packet_size" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.packet_size.normal_range }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="connection_duration" class="form-label">{{ input_info.connection_duration.description }}</label>
+                <input type="number" class="form-control" id="connection_duration" name="connection_duration" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.connection_duration.normal_range }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="num_failed_attempts" class="form-label">{{ input_info.num_failed_attempts.description }}</label>
+                <input type="number" class="form-control" id="num_failed_attempts" name="num_failed_attempts" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.num_failed_attempts.normal_range }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="source_bytes" class="form-label">{{ input_info.source_bytes.description }}</label>
+                <input type="number" class="form-control" id="source_bytes" name="source_bytes" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.source_bytes.normal_range }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="destination_bytes" class="form-label">{{ input_info.destination_bytes.description }}</label>
+                <input type="number" class="form-control" id="destination_bytes" name="destination_bytes" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.destination_bytes.normal_range }}</div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Predict</button>
+    </form>
+
+    {% if result %}
+    <div class="alert {% if result.prediction == 'Normal Traffic' %}alert-success{% else %}alert-danger{% endif %}" role="alert">
+        <h4 class="alert-heading">Prediction Result</h4>
+        <p>Detected Traffic Type: {{ result.prediction }}</p>
+    </div>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+</div>
+{% endblock %}

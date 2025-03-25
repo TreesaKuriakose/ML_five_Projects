@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Heart Disease Risk Prediction{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Heart Disease Risk Prediction</h1>
+    
+    <div class="mb-4">
+        <h4>Model Accuracy: 
+            <span class="badge bg-success accuracy-badge">{{ accuracy|floatformat:4 }}</span>
+        </h4>
+    </div>
+
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <div class="input-info">
+            <h5>Input Field Information:</h5>
+            <div class="mb-3">
+                <label for="age" class="form-label">{{ input_info.age.description }}</label>
+                <input type="number" class="form-control" id="age" name="age" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.age.normal_range }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="cholesterol" class="form-label">{{ input_info.cholesterol.description }}</label>
+                <input type="number" class="form-control" id="cholesterol" name="cholesterol" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.cholesterol.normal_range }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="blood_pressure" class="form-label">{{ input_info.blood_pressure.description }}</label>
+                <input type="number" class="form-control" id="blood_pressure" name="blood_pressure" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.blood_pressure.normal_range }}</div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Predict</button>
+    </form>
+
+    {% if result %}
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Prediction Result</h4>
+        <p>Predicted Heart Disease Risk Score: {{ result.prediction }}</p>
+    </div>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+</div>
+{% endblock %}
+
+<style>
+    .input-info {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+    }
+    .accuracy-badge {
+        font-size: 1.1em;
+        padding: 8px 15px;
+    }
+    .normal-range {
+        color: #6c757d;
+        font-style: italic;
+    }
+</style>

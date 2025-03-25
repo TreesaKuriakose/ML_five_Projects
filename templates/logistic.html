@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Loan Approval Prediction{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Loan Approval Prediction</h1>
+    
+    <div class="mb-4">
+        <h4>Model Accuracy: 
+            <span class="badge bg-success accuracy-badge">{{ accuracy|floatformat:4 }}</span>
+        </h4>
+    </div>
+
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <div class="input-info">
+            <h5>Input Field Information:</h5>
+            <div class="mb-3">
+                <label for="income" class="form-label">{{ input_info.income.description }}</label>
+                <input type="number" class="form-control" id="income" name="income" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.income.normal_range }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="credit_score" class="form-label">{{ input_info.credit_score.description }}</label>
+                <input type="number" class="form-control" id="credit_score" name="credit_score" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.credit_score.normal_range }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="loan_amount" class="form-label">{{ input_info.loan_amount.description }}</label>
+                <input type="number" class="form-control" id="loan_amount" name="loan_amount" required step="any">
+                <div class="normal-range">Normal Range: {{ input_info.loan_amount.normal_range }}</div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Predict</button>
+    </form>
+
+    {% if result %}
+    <div class="alert {% if result.prediction == 'Approved' %}alert-success{% else %}alert-warning{% endif %}" role="alert">
+        <h4 class="alert-heading">Prediction Result</h4>
+        <p>Loan Application Status: {{ result.prediction }}</p>
+    </div>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+</div>
+{% endblock %}
